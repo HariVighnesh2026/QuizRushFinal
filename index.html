@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuizRush</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section id="home" style="display: block">
+      <h1>QuizRush</h1>
+      <p class="subtitle">Test your knowledge. Boost your confidence.</p>
+
+      <div class="settings-row">
+        <div class="box setting-box">
+          <div class="setting-heading">
+            <div class="small-icon">⚙️</div>
+            <div>
+              <h2>Quiz Settings</h2>
+              <p>Customize your quiz as per your needs.</p>
+            </div>
+          </div>
+
+          <label for="number">Number of Questions</label>
+
+          <div class="number-control">
+            <button type="button" id="minus">−</button>
+            <input
+              type="number"
+              id="number"
+              value="10"
+              min="5"
+              max="10"
+              step="1"
+            />
+            <button type="button" id="plus">+</button>
+          </div>
+        </div>
+
+        <div class="box setting-box">
+          <div class="setting-heading">
+            <div class="small-icon">📄</div>
+            <div>
+              <h2>Question Type</h2>
+              <p>Choose the type of questions.</p>
+            </div>
+          </div>
+
+          <div class="select-box">
+            <button type="button" id="questionTypeButton" aria-expanded="false">
+              <span id="questionTypeText">Single Correct</span>
+              <span>⏷</span>
+            </button>
+
+            <div class="dropdown" id="questionTypeDropdown">
+              <button type="button" id="single">Single Correct</button>
+              <button type="button" id="multiple">Multiple Correct</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="box setting-box">
+          <div class="setting-heading">
+            <div class="small-icon">📈</div>
+            <div>
+              <h2>Difficulty Level</h2>
+              <p>Set the difficulty level.</p>
+            </div>
+          </div>
+
+          <div class="select-box">
+            <button type="button" id="difficultyButton" aria-expanded="false">
+              <span id="difficultyText">Medium</span>
+              <span>⏷</span>
+            </button>
+
+            <div class="dropdown" id="difficultyDropdown">
+              <button type="button" id="easy">Easy</button>
+              <button type="button" id="medium">Medium</button>
+              <button type="button" id="hard">Hard</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="box setting-box">
+          <div class="setting-heading">
+            <div class="small-icon">▶</div>
+            <div>
+              <h2>Mode</h2>
+              <p>Choose how you want to practice.</p>
+            </div>
+          </div>
+
+          <div class="option-group">
+            <button type="button" id="casualButton" class="option-btn selected">
+              Casual
+            </button>
+
+            <button type="button" id="timedButton" class="option-btn">
+              Timed Practice
+            </button>
+          </div>
+        </div>
+
+        <div class="box setting-box" id="timeOptions" hidden>
+          <div class="setting-heading">
+            <div class="small-icon">🕓</div>
+            <div>
+              <h2>Select Time</h2>
+              <p>Choose your practice duration.</p>
+            </div>
+          </div>
+
+          <div class="select-box">
+            <button type="button" id="timeButton" aria-expanded="false">
+              <span id="timeText">10 minutes</span>
+              <span>⏷</span>
+            </button>
+
+            <div class="dropdown" id="timeDropdown">
+              <button type="button" data-time="10">10 minutes</button>
+              <button type="button" data-time="20">20 minutes</button>
+              <button type="button" data-time="30">30 minutes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" id="startQuiz" class="start-button" disabled>
+        START QUIZ
+      </button>
+    </section>
+
+    <section id="quiz" style="display: none">
+      <div id="quizTop">
+        <div class="quizTitle">
+          <div class="header-icon">
+            <span>📑</span>
+          </div>
+
+          <div>
+            <h2>HTML Quiz</h2>
+            <p>Test your knowledge and challenge yourself!</p>
+          </div>
+        </div>
+
+        <div class="timerBox">
+          <div class="timer-icon">
+            <span>🕓</span>
+          </div>
+
+          <div>
+            <p class="timer-label">Time remaining</p>
+            <p id="timer">04:32</p>
+          </div>
+        </div>
+      </div>
+
+      <p id="questionNumber">Question 1 of 10</p>
+
+      <div id="progressContainer">
+        <div id="progressBar"></div>
+      </div>
+
+      <p id="progressText">1 / 10</p>
+
+      <div class="questionbox">
+        <div class="questionIcon">𝐐</div>
+
+        <h2 id="question">Question</h2>
+      </div>
+
+      <div id="options">
+        <button class="option" id="optionA">
+          <span class="radio"></span>
+          <span class="optionText">Option A</span>
+        </button>
+
+        <button class="option" id="optionB">
+          <span class="radio"></span>
+          <span class="optionText">Option B</span>
+        </button>
+
+        <button class="option" id="optionC">
+          <span class="radio"></span>
+          <span class="optionText">Option C</span>
+        </button>
+
+        <button class="option" id="optionD">
+          <span class="radio"></span>
+          <span class="optionText">Option D</span>
+        </button>
+      </div>
+
+      <div class="quizFooter">
+        <button id="previous">
+          <span>←</span>
+          Previous
+        </button>
+
+        <div class="rightButtons">
+          <button id="checkAnswer" type="button" style="display: none">
+            Check Answer
+          </button>
+          <button id="next">
+            Next Question
+            <span>→</span>
+          </button>
+
+          <button id="submitquiz">
+            <span>➤</span>
+            Submit Quiz
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="result" style="display: none">
+      <div class="resultHeader">
+        <div>
+          <h1>Quiz Results</h1>
+          <p>Here's how you performed!</p>
+        </div>
+      </div>
+
+      <div class="scoreCircle">
+        <div class="scoreInside">
+          <h2 id="scoreValue">80%</h2>
+
+          <p>Score</p>
+        </div>
+      </div>
+
+      <div class="resultStats">
+        <div class="stat">
+          <div class="statIcon correctIcon">✓</div>
+
+          <h3 id="correctAnswers">8</h3>
+
+          <p>Correct</p>
+        </div>
+
+        <div class="stat">
+          <div class="statIcon wrongIcon">×</div>
+
+          <h3 id="wrongAnswers">2</h3>
+
+          <p>Wrong</p>
+        </div>
+
+        <div class="stat">
+          <div class="statIcon accuracyIcon">🎯</div>
+
+          <h3 id="percentage">50%</h3>
+
+          <p>Accuracy</p>
+        </div>
+
+        <div class="stat">
+          <div class="statIcon timeIcon">🕓</div>
+
+          <h3 id="timeTaken">5:00</h3>
+
+          <p>Time Taken</p>
+        </div>
+      </div>
+
+      <div class="answerBreakdown">
+        <h3>Answer Breakdown</h3>
+
+        <div class="breakdownBar">
+          <div id="correctBar" class="correctBar"></div>
+
+          <div id="wrongBar" class="wrongBar"></div>
+        </div>
+
+        <div class="breakdownLabels">
+          <div class="breakdownItem">
+            <span class="breakdownIcon correctSmall"> ✓ </span>
+
+            <strong id="correctBreakdown">8</strong>
+
+            <span>Correct</span>
+          </div>
+
+          <div class="breakdownItem">
+            <span class="breakdownIcon wrongSmall"> × </span>
+
+            <strong id="wrongBreakdown">2</strong>
+
+            <span>Wrong</span>
+          </div>
+        </div>
+      </div>
+
+      <p id="resultMessage">Good job!</p>
+
+      <div class="resultButtons">
+        <button id="retry">Try Again</button>
+
+        <button id="homeButton">Back to Home</button>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
